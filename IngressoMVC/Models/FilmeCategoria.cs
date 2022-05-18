@@ -5,13 +5,11 @@ using System.Threading.Tasks;
 
 namespace IngressoMVC.Models
 {
-    public class AtorFilme
+    public class FilmeCategoria
     {
-        public int AtorId { get; set; }
-        public Ator Ator { get; set; }
-
-        public int FilmeId { get; set; }
+        public Filme FilmeId { get; set; }
         public Filme Filme { get; set; }
-
+        public Categoria CategoriaId { get; set; }
+        public Categoria Categoria { get; set; }
     }
 }
