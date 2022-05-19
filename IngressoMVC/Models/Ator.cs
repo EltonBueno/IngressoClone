@@ -8,6 +8,10 @@ namespace IngressoMVC.Models
 {
     public class Ator : Artista
     {
+        public Ator(string nome, string fotoPerfilURL, string bio) : base(nome, fotoPerfilURL, bio)
+        {
+        }
+
         public List<AtorFilme> AtoresFilmes { get; set; }
     }
 }
