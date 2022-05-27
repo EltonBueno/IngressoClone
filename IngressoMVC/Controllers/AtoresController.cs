@@ -22,5 +22,18 @@ namespace IngressoMVC.Controllers
         {
             return View(_context.Atores);
         }
+
+        public IActionResult Detalhes(int id)
+        {
+
+            var result = _context.Atores.Find(id);
+            return View(result);
+        }
+
+
+
+
+
+
     }
 }
