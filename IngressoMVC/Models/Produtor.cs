@@ -7,7 +7,7 @@ namespace IngressoMVC.Models
 {
     public class Produtor : Artista
     {
-        public Produtor(string nome, string fotoPerfilURL, string bio) : base(nome, fotoPerfilURL, bio)
+        public Produtor(string nome, string bio, string fotoPerfilURL) : base(nome, bio, fotoPerfilURL)
         {
         }
 

@@ -1,14 +1,8 @@
-﻿@model IEnumerable<Ator>
-
-
-@{
-    ViewData["Title"] = "Índice Atores" ;
-}
-
+@model IEnumerable<Categoria>
     <div class="container">
         <div class="row">
             <div class="col-md-10 offset-md-1">
-                <h1>Atores
+                <h1>Categorias
                 -
                 <a class="btn btn-dark" href="">
                     Cadastrar
@@ -27,41 +21,39 @@
                     <thead>
                         <tr>
                             <th>Ações</th>
-                            <th>@Html.DisplayNameFor(model => model.FotoPerfilURL)</th>
+                           
                             <th>@Html.DisplayNameFor(model => model.Nome)</th>
-                            <th>@Html.DisplayNameFor(model => model.Bio)</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var ator in Model)
+                        @foreach (var categoria in Model)
                         {
 
                             <tr>
                                 
                                 <td>
                                     <div class="d-flex flex-column">
-                                        <a class="btn btn-success" asp-action="Atualizar" asp-route-id="@ator.Id">
+                                        <a class="btn btn-success" asp-action="Atualizar" asp-route-id="@categoria.Id">
                                             <i class="fa-solid fa-user-pen"></i>
                                             Editar
                                         </a>
                                         
-                                        <a class="btn btn-primary mt-1" asp-action="Detalhes" asp-route-id="@ator.Id">
+                                        <a class="btn btn-primary mt-1" asp-action="Detalhes" asp-route-id="@categoria.Id">
                                             <i class="fa-solid fa-eye"></i>
                                             Ver
                                         </a>
                                         
-                                        <a class="btn btn-danger mt-1" asp-action="Deletar" asop-route-id="@ator.Id">
+                                        <a class="btn btn-danger mt-1" asp-action="Deletar" asop-route-id="@categoria.Id">
                                             <i class="fa-solid fa-trash-can"></i>
                                             Excluir
                                         </a>
                                     </div>
                                 </td>
                                 
-                                <td class="align-middle">
-                                    <img src="@ator.FotoPerfilURL" style="max-width:100px" alt="@ator.Nome" />
-                                </td>
-                                <td class="align-middle">@ator.Nome</td>
-                                <td class="align-middle">@ator.Bio</td>
+                               
+                                <td class="align-middle">@categoria.Nome</td>
+                   
                                 </tr>
                             }
                                         </tbody>

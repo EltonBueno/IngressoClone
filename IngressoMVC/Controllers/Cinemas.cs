@@ -1,4 +1,4 @@
-﻿using IngressoMVC.Data;
+using IngressoMVC.Data;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,26 +7,25 @@ using System.Threading.Tasks;
 
 namespace IngressoMVC.Controllers
 {
-   
-    public class AtoresController : Controller
+    public class CinemasController : Controller
     {
 
+        
         private IngressoDbContext _context;
-        public AtoresController(IngressoDbContext context)
+        public CinemasController(IngressoDbContext context)
         {
             _context = context;
         }
-       
 
         public IActionResult Index()
         {
-            return View(_context.Atores);
+            return View(_context.Cinemas);
         }
 
         public IActionResult Detalhes(int id)
         {
 
-            var result = _context.Atores.Find(id);
+            var result = _context.Cinemas.Find(id);
             return View(result);
         }
 
@@ -37,21 +36,17 @@ namespace IngressoMVC.Controllers
 
         public IActionResult Atualizar(int id)
         {
-            //buscar o ator no banco
-            //passar o ator na view
+            //buscar o Cinema no banco
+            //passar o Cinema na view
             
            return View();     
         }
         
         public IActionResult Deletar(int id)
         {
-            //buscar o ator no banco
-            //passar o ator na view
+            //buscar o Cinema no banco
+            //passar o Cinema na view
            return View();     
         }
-
-
-
-
     }
 }

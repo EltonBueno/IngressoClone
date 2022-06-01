@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using IngressoMVC.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,43 @@ namespace IngressoMVC.Controllers
 {
     public class ProdutoresController : Controller
     {
+        private IngressoDbContext _context;
+        public ProdutoresController(IngressoDbContext context)
+        {
+            _context = context;
+        }
+       
+
         public IActionResult Index()
         {
-            return View();
+            return View(_context.Produtores);
+        }
+
+        public IActionResult Detalhes(int id)
+        {
+
+            var result = _context.Produtores.Find(id);
+            return View(result);
+        }
+
+        public IActionResult Criar()
+        {
+           return View();     
+        }
+
+        public IActionResult Atualizar(int id)
+        {
+            //buscar o Produtores no banco
+            //passar o Produtores na view
+            
+           return View();     
+        }
+        
+        public IActionResult Deletar(int id)
+        {
+            //buscar o Categoria no banco
+            //passar o Categoria na view
+           return View();     
         }
     }
 }
