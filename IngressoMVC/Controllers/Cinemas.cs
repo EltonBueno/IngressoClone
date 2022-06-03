@@ -40,6 +40,12 @@ namespace IngressoMVC.Controllers
         public IActionResult Criar(PostCinemaDTO cinemaDTO)
         {
             Cinema cinema = new Cinema(cinemaDTO.Nome, cinemaDTO.Descricao, cinemaDTO.LogoURL);
+
+            if (!ModelState.IsValid || !cinemaDTO.LogoURL.EndsWith(".jpg"))
+            {
+                return View(cinemaDTO);
+            }
+
             _context.Cinemas.Add(cinema);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));

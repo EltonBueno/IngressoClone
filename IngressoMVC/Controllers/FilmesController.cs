@@ -1,4 +1,6 @@
 ﻿using IngressoMVC.Data;
+using IngressoMVC.Models;
+using IngressoMVC.Models.ViewModels.Request;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -29,9 +31,31 @@ namespace IngressoMVC.Controllers
             return View(result);
         }
 
-        public IActionResult Criar()
+        public IActionResult Criar(PostFilmeDTO filmeDTO)
         {
-           return View();     
+            var cinema =_context.Cinemas.FirstOrDefault(c => c.Nome == filmeDTO.NomeCinema);
+
+            if (cinema == null)
+            {
+                return View();
+            }
+
+            var produtor = _context.Produtores.FirstOrDefault(p => p.Nome == filmeDTO.NomeProdutor);
+
+            if (produtor == null)
+            {
+               return View(); 
+            }
+            Filme filme = new Filme(filmeDTO.Titulo, 
+                                    filmeDTO.Descricao, 
+                                    filmeDTO.Preco, 
+                                    filmeDTO.ImageURL,
+                                    cinema.Id,
+                                    produtor.Id);
+            
+            _context.Add(filme);
+            _context.SaveChanges();
+           return RedirectToAction(nameof(Index));     
         }
 
         public IActionResult Atualizar(int id)

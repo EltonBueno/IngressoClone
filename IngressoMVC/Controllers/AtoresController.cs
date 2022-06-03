@@ -43,7 +43,10 @@ namespace IngressoMVC.Controllers
         {
             Ator ator = new Ator(atorDTO.Nome, atorDTO.Bio, atorDTO.FotoPerfilURL);
             
-            
+            if (!ModelState.IsValid || !atorDTO.FotoPerfilURL.EndsWith(".jpg") )
+            {
+                return View(atorDTO);
+            }
             
             _context.Atores.Add(ator);
             _context.SaveChanges();
@@ -60,11 +63,22 @@ namespace IngressoMVC.Controllers
         
         public IActionResult Deletar(int id)
         {
+            var result = _context.Atores.FirstOrDefault(a => a.Id == id);
+            if (result == null) return View();
+            
             //buscar o ator no banco
             //passar o ator na view
-           return View();     
+           return View(result);     
         }
 
+        [HttpDelete]
+        public IActionResult ConfirmarDeletar(int id)
+        {
+            var result = _context.Atores.FirstOrDefault(a => a.Id == id);
+            _context.Atores.Remove(result);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
 
 
 

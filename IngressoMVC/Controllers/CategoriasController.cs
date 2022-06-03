@@ -40,7 +40,13 @@ namespace IngressoMVC.Controllers
         [HttpPost]
         public IActionResult Criar(PostCategoriaDTO categoriaDTO)
         {
+            
             Categoria categoria = new Categoria(categoriaDTO.Nome);
+            if (!ModelState.IsValid)
+            {
+                return View(categoriaDTO);
+            }
+
             _context.Categorias.Add(categoria);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
