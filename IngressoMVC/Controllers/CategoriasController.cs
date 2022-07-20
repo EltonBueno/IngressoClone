@@ -52,19 +52,48 @@ namespace IngressoMVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Atualizar(int id)
+        public IActionResult Atualizar(int? id)
         {
-            //buscar o Categoria no banco
-            //passar o Categoria na view
-            
-           return View();     
+            if (id == null) return NotFound();
+
+            var result = _context.Categorias.FirstOrDefault(a => a.Id == id);
+
+            if (result == null) return View();
+
+            return View(result);
         }
-        
+
+        [HttpPost]
+        public IActionResult Atualizar(int id, PostCategoriaDTO categoriaDto)
+        {
+            var result = _context.Categorias.FirstOrDefault(a => a.Id == id);
+
+            if (!ModelState.IsValid) return View(result);
+
+            result.AtualizarDados(categoriaDto.Nome);
+            _context.Categorias.Update(result);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
         public IActionResult Deletar(int id)
         {
-            //buscar o Categoria no banco
-            //passar o Categoria na view
-           return View();     
+            var result = _context.Categorias.FirstOrDefault(a => a.Id == id);
+            if (result == null) return View();
+
+
+            return View(result);
         }
+
+        [HttpPost, ActionName("Deletar")]
+        public IActionResult ConfirmarDeletar(int id)
+        {
+            var result = _context.Categorias.FirstOrDefault(a => a.Id == id);
+            _context.Categorias.Remove(result);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

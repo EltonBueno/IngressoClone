@@ -58,12 +58,23 @@ namespace IngressoMVC.Controllers
             
            return View();     
         }
-        
+
         public IActionResult Deletar(int id)
         {
-            //buscar o Cinema no banco
-            //passar o Cinema na view
-           return View();     
+            var result = _context.Cinemas.FirstOrDefault(a => a.Id == id);
+            if (result == null) return View();
+
+
+            return View(result);
+        }
+
+        [HttpPost, ActionName("Deletar")]
+        public IActionResult ConfirmarDeletar(int id)
+        {
+            var result = _context.Cinemas.FirstOrDefault(a => a.Id == id);
+            _context.Cinemas.Remove(result);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -19,7 +19,7 @@ namespace IngressoMVC.Models.ViewModels.Request
 
         public List<string> NomesAtores { get; set; }
         public List<string> Categorias { get; set; }
-
+        public string NomePodutor { get; internal set; }
     }
 
 

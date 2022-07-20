@@ -31,31 +31,29 @@ namespace IngressoMVC.Controllers
             return View(result);
         }
 
-        public IActionResult Criar(PostFilmeDTO filmeDTO)
+        [HttpPost]
+        public IActionResult Criar(PostFilmeDTO filmeDto)
         {
-            var cinema =_context.Cinemas.FirstOrDefault(c => c.Nome == filmeDTO.NomeCinema);
+            var cinema = _context.Cinemas.FirstOrDefault(c => c.Nome == filmeDto.NomeCinema);
+            if (cinema == null) return View();
 
-            if (cinema == null)
-            {
-                return View();
-            }
+            var produtor = _context.Produtores.FirstOrDefault(p => p.Nome == filmeDto.NomePodutor);
+            if (produtor == null) return View();
 
-            var produtor = _context.Produtores.FirstOrDefault(p => p.Nome == filmeDTO.NomeProdutor);
+            Filme filme = new Filme
+                (
+                    filmeDto.Titulo,
+                    filmeDto.Descricao,
+                    filmeDto.Preco,
+                    filmeDto.ImageURL,
+                    cinema.Id,
+                    produtor.Id
+                );
 
-            if (produtor == null)
-            {
-               return View(); 
-            }
-            Filme filme = new Filme(filmeDTO.Titulo, 
-                                    filmeDTO.Descricao, 
-                                    filmeDTO.Preco, 
-                                    filmeDTO.ImageURL,
-                                    cinema.Id,
-                                    produtor.Id);
-            
             _context.Add(filme);
             _context.SaveChanges();
-           return RedirectToAction(nameof(Index));     
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Atualizar(int id)

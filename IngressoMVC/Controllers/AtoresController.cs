@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IngressoMVC.Controllers
 {
-   
+
     public class AtoresController : Controller
     {
 
@@ -18,7 +18,7 @@ namespace IngressoMVC.Controllers
         {
             _context = context;
         }
-       
+
 
         public IActionResult Index()
         {
@@ -35,31 +35,55 @@ namespace IngressoMVC.Controllers
 
         public IActionResult Criar()
         {
-           return View();     
+            return View();
         }
 
         [HttpPost]
         public IActionResult Criar(PostAtorDTO atorDTO)
         {
             Ator ator = new Ator(atorDTO.Nome, atorDTO.Bio, atorDTO.FotoPerfilURL);
-            
-            if (!ModelState.IsValid || !atorDTO.FotoPerfilURL.EndsWith(".jpg") )
+
+            if (!ModelState.IsValid || !atorDTO.FotoPerfilURL.EndsWith(".jpg"))
             {
                 return View(atorDTO);
             }
-            
+
             _context.Atores.Add(ator);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Atualizar(int id)
+        public IActionResult Atualizar(int? id)
         {
-            
-            
-           return View();     
+            if (id == null)
+                return NotFound();
+
+            //buscar o ator no banco
+            var result = _context.Atores.FirstOrDefault(a => a.Id == id);
+
+            if (result == null)
+                return View();
+
+            //passar o ator na view
+            return View(result);
         }
-        
+
+        [HttpPost]
+        public IActionResult Atualizar(int id, PostAtorDTO atorDto)
+        {
+            var ator = _context.Atores.FirstOrDefault(a => a.Id == id);
+
+            if (!ModelState.IsValid)
+                return View(ator);
+
+            ator.AtualizarDados(atorDto.Nome, atorDto.Bio, atorDto.FotoPerfilURL);
+
+            _context.Update(ator);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
         public IActionResult Deletar(int id)
         {
             var result = _context.Atores.FirstOrDefault(a => a.Id == id);
