@@ -55,8 +55,7 @@ namespace IngressoMVC.Controllers
 
         public IActionResult Atualizar(int id)
         {
-            //buscar o ator no banco
-            //passar o ator na view
+            
             
            return View();     
         }
@@ -66,8 +65,7 @@ namespace IngressoMVC.Controllers
             var result = _context.Atores.FirstOrDefault(a => a.Id == id);
             if (result == null) return View();
             
-            //buscar o ator no banco
-            //passar o ator na view
+            
            return View(result);     
         }
 
